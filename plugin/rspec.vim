@@ -32,9 +32,14 @@ let g:loaded_rspec = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-if !exists("g:rspec_command") "{{{
-  let s:cmd = "rspec {spec}"
-  let g:rspec_command = "!echo " . s:cmd . " && " . s:cmd
+if !exists('g:rspec_command') "{{{
+  let s:cmd = 'rspec {spec}'
+
+  if exists(':Dispatch')
+    let g:rspec_command = 'Dispatch ' . s:cmd
+  else
+    let g:rspec_command = '!echo ' . s:cmd . ' && ' . s:cmd
+  endif
 endif "}}}
 
 command! -nargs=0 RSpecAll call rspec#run_all()
