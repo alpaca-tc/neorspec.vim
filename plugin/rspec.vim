@@ -32,21 +32,24 @@ let g:loaded_rspec = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-if !exists('g:rspec_command') "{{{
+if !exists('g:neorspec_command') "{{{
   let s:cmd = 'rspec {spec}'
 
   if exists(':Dispatch')
-    let g:rspec_command = 'Dispatch ' . s:cmd
+    let g:neorspec_command = 'Dispatch ' . s:cmd
   else
-    let g:rspec_command = '!echo ' . s:cmd . ' && ' . s:cmd
+    let g:neorspec_command = '!echo ' . s:cmd . ' && ' . s:cmd
   endif
-endif "}}}
+endif 
 
-command! -nargs=0 RSpecAll call rspec#run_all()
-command! -nargs=0 RSpecNearest call rspec#nearest_spec() 
-command! -nargs=0 RSpecRetry call rspec#retry()
-command! -nargs=0 RSpecCurrent call rspec#current_spec_file()
-command! -nargs=* -complete=file RSpec call rspec#run(<q-args>)
+let g:neorspec_debug = get(g:, 'neorspec_debug', 0)
+"}}}
+
+command! -nargs=0 RSpecAll call neorspec#run_all()
+command! -nargs=0 RSpecNearest call neorspec#nearest_spec() 
+command! -nargs=0 RSpecRetry call neorspec#retry()
+command! -nargs=0 RSpecCurrent call neorspec#current_spec_file()
+command! -nargs=* -complete=file RSpec call neorspec#run(<q-args>)
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

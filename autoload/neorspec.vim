@@ -43,7 +43,7 @@ function! s:in_spec_file() "{{{
 endfunction "}}}
 "}}}
 
-function! rspec#run_spec_or_retry() "{{{
+function! neorspec#run_spec_or_retry() "{{{
   try
     let alternate = rails#buffer().alternate()
 
@@ -51,63 +51,63 @@ function! rspec#run_spec_or_retry() "{{{
     let is_readable = filereadable(b:rails_root . '/' . alternate)
 
     if is_specfile && is_readable
-      call rspec#run_specs(alternate)
+      call neorspec#run_specs(alternate)
     else
       echomsg alternate . " can't find"
       throw 'Error occurd'
     endif
   catch /.*/
-    call rspec#retry()
+    call neorspec#retry()
   endtry
 endfunction "}}}
 
-function! rspec#run_all() "{{{
-  call rspec#run_specs('spec')
+function! neorspec#run_all() "{{{
+  call neorspec#run_specs('spec')
 endfunction "}}}
 
-function! rspec#run(path) "{{{
+function! neorspec#run(path) "{{{
   let args = a:path
   if empty(args)
-    return rspec#run_all()
+    return neorspec#run_all()
   elseif args =~ '^\.$'
-    return rspec#current_spec_file()
+    return neorspec#current_spec_file()
   else
     let current_dir = getcwd()
     let relative_path_list = map(split(args, '\s\+'), '<SID>get_relative_path(current_dir . "/" . v:val)')
     let spec = join(relative_path_list, ' ') 
 
-    return rspec#run_specs(spec)
+    return neorspec#run_specs(spec)
   endif
 endfunction "}}}
 
-function! rspec#current_spec_file() "{{{
+function! neorspec#current_spec_file() "{{{
   if s:in_spec_file()
-    call rspec#run_specs(s:get_relative_path(expand("%:p")))
+    call neorspec#run_specs(s:get_relative_path(expand("%:p")))
   else
-    call rspec#run_spec_or_retry()
+    call neorspec#run_spec_or_retry()
   endif
 endfunction "}}}
 
-function! rspec#nearest_spec() "{{{
+function! neorspec#nearest_spec() "{{{
   if s:in_spec_file()
-    call rspec#run_specs(s:get_relative_path(expand("%:p")) . ":" . line("."))
+    call neorspec#run_specs(s:get_relative_path(expand("%:p")) . ":" . line("."))
   else
-    call rspec#run_spec_or_retry()
+    call neorspec#run_spec_or_retry()
   endif
 endfunction "}}}
 
-function! rspec#retry() "{{{
+function! neorspec#retry() "{{{
   if exists('s:last_spec_command')
-    call rspec#run_specs(s:last_spec_command)
+    call neorspec#run_specs(s:last_spec_command)
   else
     echomsg 'No rspec command is executed'
   endif
 endfunction "}}}
 
-function! rspec#run_specs(spec) "{{{
+function! neorspec#run_specs(spec) "{{{
   let s:last_spec_command = a:spec
 
-  echo 'spec... ' . a:spec
+  if g:neorspec_debug | echomsg 'spec... ' . a:spec | endif
 
   if !empty(s:get_root_dir())
     let g:root = s:get_root_dir()
@@ -115,7 +115,7 @@ function! rspec#run_specs(spec) "{{{
     lcd `=s:get_root_dir()`
   endif
 
-  execute substitute(g:rspec_command, "{spec}", a:spec, "g")
+  execute substitute(g:neorspec_command, "{spec}", a:spec, "g")
 
   if !empty(s:get_root_dir())
     lcd `=current_path`

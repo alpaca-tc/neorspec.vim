@@ -44,9 +44,9 @@ augroup END
 
 ## Variables
 
-Overwrite `g:rspec_command` variable to execute a custom command.
+Overwrite `g:neorspec_command` variable to execute a custom command.
 
 Example:
 
-`let g:rspec_command = "!rspec --drb {spec}"`
-`let g:rspec_command = "Dispatch zeus rspec {spec}"`
+`let g:neorspec_command = "!rspec --drb {spec}"`
+`let g:neorspec_command = "Dispatch zeus rspec {spec}"`
