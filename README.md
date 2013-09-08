@@ -5,7 +5,7 @@ This is a Rspec runner for Vim.
 ## Install 
 
 ```vim:.vimrc
-NeoBundleLazy 'taichouchou2/rspec.vim', { 
+NeoBundleLazy 'alpaca-tc/rspec.vim', { 
     \ 'depends' : 'tpope/vim-rails',
     \ 'autoload' : {
     \   'commands' : [
