@@ -7,7 +7,7 @@ This is a Rspec runner for Vim.
 ```vim:.vimrc
 NeoBundleLazy 'taichouchou2/rspec.vim', { 
     \ 'depends' : 'tpope/vim-rails',
-    \ 'autoload' {
+    \ 'autoload' : {
     \   'commands' : [
     \       'RSpecAll', 'RSpecNearest', 'RSpecRetry',
     \       'RSpecCurrent', 'RSpec'
