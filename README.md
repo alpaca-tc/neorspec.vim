@@ -1,11 +1,11 @@
-# rspec.vim
+# neorspec.vim
 
 This is a Rspec runner for Vim.
 
 ## Install 
 
 ```vim:.vimrc
-NeoBundleLazy 'alpaca-tc/rspec.vim', { 
+NeoBundleLazy 'alpaca-tc/neorspec.vim', {
     \ 'depends' : 'tpope/vim-rails',
     \ 'autoload' : {
     \   'commands' : [
