@@ -37,8 +37,8 @@ function! s:load_rspec_settings()
 endfunction
 
 augroup RSpecSetting
-  autoload!
-  autoload BufEnter *.rb call s:load_rspec_settings()
+  autocmd!
+  autocmd BufEnter *.rb call s:load_rspec_settings()
 augroup END
 ```
 
